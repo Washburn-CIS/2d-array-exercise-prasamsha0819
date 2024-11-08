@@ -6,6 +6,7 @@ public class TicTacToe {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         board = new char[][]{
+        
             {'.','.','.'},
             {'.','.','.'},
             {'.','.','.'}};
@@ -22,12 +23,14 @@ public class TicTacToe {
             int c = in.nextInt() - 1;
 
              // challenge: prevent the turn from advancing if the user entered bad coordinates
-
-
+            if (r < 0 || r >= 3 || c < 0 || c >= 3 || board[r][c] != '.') {
+                System.out.println("Invalid move. Please enter a valid row and column.(1-3)"); 
+            } else{
             board[r][c] = turn;
             turn = turn == 'X' ? 'O': 'X';
             printBoard();
             winner = findWinner();
+            }
         }
         if(winner != '-') {
             System.out.printf("Game Over: %c wins%n", winner);
@@ -58,11 +61,20 @@ public class TicTacToe {
 
         // TODO: three-in-a-row vertically 
 
+        for(int r=0; r<3; r++) {
+            if(board[0][r] != '.' && board[0][r] == board[1][r] && board[1][r] == board[2][r]) {
+                return board[0][r];
+            }
+        }
         // diagonals
         if(board[0][0] != '.' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
             return board[0][0];
         }
         // TODO: check other diagonal
+
+        if(board[0][2] != '.' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+            return board[0][2];
+        }
             
         return '-';
     }
